@@ -1,4 +1,6 @@
 import java.util.HashSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by po917265 on 6/29/17.
@@ -8,7 +10,7 @@ public class Terminal implements Symbol{
     public static final Terminal epsilon = new Terminal("epsilon");
     public static final Terminal EOF = new Terminal("EOF");
 
-    private String pattern;
+    private Pattern pattern;
     private String name;
 
     public String match(String input) {
@@ -22,7 +24,7 @@ public class Terminal implements Symbol{
 
     public Terminal(String name, String pattern) {
         this.name = name;
-        this.pattern = pattern;
+        this.pattern = Pattern.compile(pattern);
     }
 
     public int hashCode() {
@@ -47,6 +49,26 @@ public class Terminal implements Symbol{
         if(this.equals(epsilon)) {
             return "epsilon";
         }
-        return name + "[" + pattern + "]";
+        return name;
+    }
+
+    public Term parse(String input) {
+        if(this.equals(Terminal.EOF)) {
+            return new Term(":EOF");
+        } else if(this.equals(this.equals(Terminal.epsilon))) {
+            return new Term(":epsilon");
+        }
+        Matcher m = pattern.matcher(input);
+        if(m.find()) {
+            Term ans = new Term(name);
+            ans.addChild(m.group(1));
+        } else {
+            return null;
+        }
+    }
+
+    public static Terminal keyword(String keyword) {
+        Terminal ans = new Terminal(keyword, "\\Q" + keyword + "\\E");
+        return ans;
     }
 }

@@ -136,4 +136,13 @@ public class Grammar {
         if(containsEpsilon) answer.add(Terminal.epsilon);
         return answer;
     }
+
+    public void parse(String s) {
+        HashMap<Terminal, HashMap<String, ArrayList<Symbol>>> parseTable = parseTable();
+        parse(parseTable, start, null);
+    }
+
+    private void parse(HashMap<Terminal, HashMap<String, ArrayList<Symbol>>> parseTable, Rule start, Term nextToken) {
+        parseTable.get(nextToken.)
+    }
 }

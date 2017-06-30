@@ -8,10 +8,10 @@ public class Test {
         /*
         Test from: http://faculty.ycp.edu/~dhovemey/fall2010/cs340/lecture/lecture9.html
          */
-        Terminal a = new Terminal("a", "a");
-        Terminal b = new Terminal("b", "b");
-        Terminal times = new Terminal("*", "*");
-        Terminal plus = new Terminal("+", "+");
+        Terminal a = Terminal.keyword("a");
+        Terminal b = Terminal.keyword("b");
+        Terminal times = Terminal.keyword("*");
+        Terminal plus = Terminal.keyword("+");
 
         Rule F = new Rule("F");
         F.addExpansion(a);
