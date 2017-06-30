@@ -9,10 +9,12 @@ public class Rule implements Symbol, Iterable<ArrayList<Symbol>> {
 
     private ArrayList<ArrayList<Symbol>> expansions;
     private String head;
+    private boolean phantom;
 
-    public Rule(String head) {
+    public Rule(String head, boolean phantom) {
         this.head = head;
         expansions = new ArrayList<ArrayList<Symbol>>();
+        this.phantom = phantom;
     }
 
     public int hashCode() {
@@ -84,5 +86,9 @@ public class Rule implements Symbol, Iterable<ArrayList<Symbol>> {
 
     public String head() {
         return head;
+    }
+
+    public boolean phantom() {
+        return phantom;
     }
 }

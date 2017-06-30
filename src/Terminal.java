@@ -12,6 +12,7 @@ public class Terminal implements Symbol{
 
     private Pattern pattern;
     private String name;
+    private boolean phantom, ignore;
 
     public String match(String input) {
         return null;
@@ -20,11 +21,15 @@ public class Terminal implements Symbol{
     private Terminal(String name) {  //used only to create the epsilon terminal.
         this.name = name;
         pattern = null;
+        phantom = true;
+        ignore = false;
     }
 
-    public Terminal(String name, String pattern) {
+    public Terminal(String name, String pattern, boolean phantom, boolean ignore) {
         this.name = name;
         this.pattern = Pattern.compile(pattern);
+        this.phantom = phantom;
+        this.ignore = ignore;
     }
 
     public int hashCode() {
@@ -45,6 +50,11 @@ public class Terminal implements Symbol{
         return ans;
     }
 
+    @Override
+    public boolean phantom() {
+        return phantom;
+    }
+
     public String toString() {
         if(this.equals(epsilon)) {
             return "epsilon";
@@ -52,23 +62,27 @@ public class Terminal implements Symbol{
         return name;
     }
 
-    public Term parse(String input) {
+    public Token parse(String input) {
         if(this.equals(Terminal.EOF)) {
-            return new Term(":EOF");
-        } else if(this.equals(this.equals(Terminal.epsilon))) {
-            return new Term(":epsilon");
+            return input.length() == 0 ? new Token(this, "") : null;
+        } else if(this.equals(Terminal.epsilon)) {
+            return new Token(this, "");
         }
         Matcher m = pattern.matcher(input);
         if(m.find()) {
-            Term ans = new Term(name);
-            ans.addChild(m.group(1));
+            Token ans = new Token(this, m.group(0));
+            return ans;
         } else {
             return null;
         }
     }
 
-    public static Terminal keyword(String keyword) {
-        Terminal ans = new Terminal(keyword, "\\Q" + keyword + "\\E");
+    public static Terminal keyword(String keyword, boolean phantom) {
+        Terminal ans = new Terminal(keyword, "^\\Q" + keyword + "\\E", phantom, false);
         return ans;
+    }
+
+    public boolean ignore() {
+        return ignore;
     }
 }

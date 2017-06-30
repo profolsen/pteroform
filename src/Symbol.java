@@ -6,4 +6,6 @@ import java.util.HashSet;
 public interface Symbol {
 
     public HashSet<Terminal> first();
+
+    public boolean phantom();
 }

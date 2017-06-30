@@ -87,6 +87,10 @@ public class Grammar {
         return answer;
     }
 
+    public Rule start() {
+        return start;
+    }
+
     private boolean vertical_update(HashMap<Rule, HashSet<Terminal>> followMap) {
         boolean answer = false;
         for(Rule r : followMap.keySet()) {
@@ -137,12 +141,48 @@ public class Grammar {
         return answer;
     }
 
-    public void parse(String s) {
-        HashMap<Terminal, HashMap<String, ArrayList<Symbol>>> parseTable = parseTable();
-        parse(parseTable, start, null);
+    public HashSet<Terminal> terminals() {
+        return terminals;
     }
 
-    private void parse(HashMap<Terminal, HashMap<String, ArrayList<Symbol>>> parseTable, Rule start, Term nextToken) {
-        parseTable.get(nextToken.)
+    public String toString() {
+        String ans = "terminals {\n";
+        for(Terminal t : terminals) {
+            ans += "\t" + t + ";\n";
+        }
+        ans += "}\nrules {\n";
+        for(Rule r : rules) {
+            for(ArrayList<Symbol> expansion : r) {
+                ans += "\t" + r + " --> " + expansion + ";\n";
+            }
+        }
+        ans += "}";
+        return ans;
+    }
+
+    public HashSet<Terminal> ignore() {
+        HashSet<Terminal> ans = new HashSet<Terminal>();
+        for(Terminal t : terminals) {
+            if(t.ignore()) {
+                ans.add(t);
+            }
+        }
+        return ans;
+    }
+
+    public HashSet<Rule> phantomRules() {
+        HashSet<Rule> phantomRules = new HashSet<Rule>();
+        for(Rule r : rules) {
+            if(r.phantom()) phantomRules.add(r);
+        }
+        return phantomRules;
+    }
+
+    public HashSet<Terminal> phantomTerminals() {
+        HashSet<Terminal> phantomTerminals = new HashSet<Terminal>();
+        for(Terminal t : terminals) {
+            if(t.phantom()) phantomTerminals.add(t);
+        }
+        return phantomTerminals;
     }
 }
