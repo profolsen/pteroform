@@ -6,7 +6,6 @@ public class GrammarParser {
     static {
         Terminal semicolon = Terminal.keyword(";", true);
         Terminal arrow = Terminal.keyword("-->", true);
-        Terminal optionToken = Terminal.keyword("options", true);
         Terminal lbracket = Terminal.keyword("[", true);
         Terminal phantom = Terminal.keyword("phantom", false);
         Terminal ignore = Terminal.keyword("ignore", false);
@@ -17,22 +16,39 @@ public class GrammarParser {
         Terminal lbrace = Terminal.keyword("{", true);
         Terminal rbrace = Terminal.keyword("}", true);
         Terminal rulesToken = Terminal.keyword("rules", true);
+
+        Terminal patternToken = new Terminal("patternToken", "(?<!/)/(?!/).*(?<!/)/(?!/)", false, false);
+        Terminal keyword = Terminal.keyword("keyword", false);
+        Terminal pattern = Terminal.keyword("pattern", false);
+        Terminal terminalsToken = Terminal.keyword("terminals", true);
+
+
+
         Rule endOfOptions = new Rule("endOfOptions", true);
         endOfOptions.addExpansion(epsilon);
         endOfOptions.addExpansion(phantom, endOfOptions);
         endOfOptions.addExpansion(ignore, endOfOptions);
         Rule options = new Rule("options", false);
         options.addExpansion(epsilon);
-        options.addExpansion(optionToken, lbracket, endOfOptions, rbracket);
+        options.addExpansion(lbracket, endOfOptions, rbracket);
+        Rule terminal = new Rule("terminal", false);
+        terminal.addExpansion(epsilon);
+        terminal.addExpansion(keyword, identifier, options, patternToken, semicolon, terminal);
+        terminal.addExpansion(pattern, identifier, options, patternToken, semicolon, terminal);
+        Rule terminals = new Rule("terminals", true);
+        terminals.addExpansion(terminalsToken, lbrace, terminal, rbrace);
         Rule endOfRule = new Rule("endOfRule", true);
         endOfRule.addExpansion(identifier, endOfRule);
         endOfRule.addExpansion(epsilon);
         Rule rule = new Rule("rule", false);
         rule.addExpansion(identifier, options, arrow, endOfRule, semicolon, rule);
         rule.addExpansion(epsilon);
-        Rule rules = new Rule("rules", false);
+        Rule rules = new Rule("rules", true);
         rules.addExpansion(rulesToken, lbrace, rule, rbrace);
-        grammar.addRules(rules, rule, endOfRule, endOfOptions, options);
-        grammar.addTerminals(semicolon, arrow, clearspace, identifier, optionToken, lbracket, rbracket, phantom, ignore, lbrace, rbrace, rulesToken);
+        Rule s = new Rule("grammar", false);
+        s.addExpansion(terminals, rules);
+
+        grammar.addRules(s, rules, rule, endOfRule, endOfOptions, options, terminal, terminals);
+        grammar.addTerminals(semicolon, arrow, clearspace, identifier, lbracket, rbracket, phantom, ignore, lbrace, rbrace, rulesToken, patternToken, keyword, pattern, terminalsToken);
     }
 }

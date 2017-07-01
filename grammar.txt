@@ -1,0 +1,36 @@
+terminals {
+	keyword semicolon [phantom] /;/;
+	keyword arrow [phantom] /-->/;
+	keyword lbracket [phantom] /[/;
+	keyword rbracket [phantom] /]/;
+	keyword lbrace [phantom] /{/;
+	keyword rbrace [phantom] /}/;
+ 	keyword phantom /phantom/;
+	keyword ignore /ignore/;
+	pattern clearspace [ignore] /\s+/;
+	pattern identifier /[a-zA-Z][a-zA-Z0-9]*/;
+	keyword rulesToken [phantom] /rules/;
+	keyword keyword /keyword/;
+	keyword pattern /pattern/;
+	keyword terminalsToken [phantom] /terminals/;
+	pattern patternToken /(?<!//)//(?!//).*(?<!//)//(?!//)/;
+} rules {
+	endOfOptions [phantom] --> epsilon;
+	endOfOptions --> phantom endOfOptions;
+	endOfOptions --> ignore endOfOptions;
+	options --> epsilon;
+	options --> lbracket endOfOptions rbracket;
+	terminal --> epsilon;
+	terminal --> keyword identifier options patternToken
+			semicolon terminal;
+	terminal --> pattern identifier options patternToken
+			semicolon terminal;
+	terminals [phantom] --> terminalsToken lbrace terminal rbrace;
+	endOfRule [phantom] --> identifier endOfRule;
+	endOfRule --> epsilon;
+	rule --> identifier options arrow endOfRule semicolon rule;
+	rule --> epsilon;
+	rules [phantom] --> rulesToken lbrace rule rbrace;
+	s --> terminals rules;
+}
+

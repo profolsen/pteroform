@@ -72,7 +72,7 @@ public class Test {
         System.out.println(GrammarParser.grammar.parseTable());
         Parser gp = new Parser(GrammarParser.grammar);
         String longerTest =
-                "rules {" +
+                /*"rules {" +
                     "endOfOptions options[phantom] --> epsilon; " +
                     "endOfOptions --> phantom endOfOptions; " +
                     "endOfOptions --> ignore endOfOptions; " +
@@ -82,7 +82,43 @@ public class Test {
                     "rule --> identifier options arrow endOfRule semicolon rule; " +
                     "rule --> epsilon; " +
                     "rules --> rulesToken lbrace rule rbrace; " +
-                "}";
+                "}";*/
+                "terminals {\n" +
+                        "\tkeyword semicolon [phantom] /;/;\n" +
+                        "\tkeyword arrow [phantom] /-->/;\n" +
+                        "\tkeyword lbracket [phantom] /[/;\n" +
+                        "\tkeyword rbracket [phantom] /]/;\n" +
+                        "\tkeyword lbrace [phantom] /{/;\n" +
+                        "\tkeyword rbrace [phantom] /}/;\n" +
+                        " \tkeyword phantom /phantom/;\n" +
+                        "\tkeyword ignore /ignore/;\n" +
+                        "\tpattern clearspace [ignore] /\\s+/;\n" +
+                        "\tpattern identifier /[a-zA-Z][a-zA-Z0-9]*/;\n" +
+                        "\tkeyword rulesToken [phantom] /rules/;\n" +
+                        "\tkeyword keyword /keyword/;\n" +
+                        "\tkeyword pattern /pattern/;\n" +
+                        "\tkeyword terminalsToken [phantom] /terminals/;\n" +
+                        "\tpattern patternToken /(?<!//)//(?!//).*(?<!//)//(?!//)/;\n" +
+                        "} rules {\n" +
+                        "\tendOfOptions [phantom] --> epsilon;\n" +
+                        "\tendOfOptions --> phantom endOfOptions;\n" +
+                        "\tendOfOptions --> ignore endOfOptions;\n" +
+                        "\toptions --> epsilon;\n" +
+                        "\toptions --> lbracket endOfOptions rbracket;\n" +
+                        "\tterminal --> epsilon;\n" +
+                        "\tterminal --> keyword identifier options patternToken\n" +
+                        "\t\t\tsemicolon terminal;\n" +
+                        "\tterminal --> pattern identifier options patternToken\n" +
+                        "\t\t\tsemicolon terminal;\n" +
+                        "\tterminals [phantom] --> terminalsToken lbrace terminal rbrace;\n" +
+                        "\tendOfRule [phantom] --> identifier endOfRule;\n" +
+                        "\tendOfRule --> epsilon;\n" +
+                        "\trule --> identifier options arrow endOfRule semicolon rule;\n" +
+                        "\trule --> epsilon;\n" +
+                        "\trules [phantom] --> rulesToken lbrace rule rbrace;\n" +
+                        "\ts --> terminals rules;\n" +
+                        "\n" +
+                        "}";
         Term grammar = gp.parse(longerTest);
         System.out.println(grammar);
         /*
