@@ -15,6 +15,7 @@ terminals {
 	keyword terminalsToken [phantom] /terminals/;
 	pattern patternToken /(?<!//)//(?!//).*(?<!//)//(?!//)/;
 } rules {
+	s --> terminals rules;
 	endOfOptions [phantom] --> epsilon;
 	endOfOptions --> phantom endOfOptions;
 	endOfOptions --> ignore endOfOptions;
@@ -31,6 +32,5 @@ terminals {
 	rule --> identifier options arrow endOfRule semicolon rule;
 	rule --> epsilon;
 	rules [phantom] --> rulesToken lbrace rule rbrace;
-	s --> terminals rules;
 }
 
