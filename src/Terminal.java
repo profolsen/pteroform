@@ -27,7 +27,7 @@ public class Terminal implements Symbol{
 
     public Terminal(String name, String pattern, boolean phantom, boolean ignore) {
         this.name = name;
-        this.pattern = Pattern.compile(pattern);
+        this.pattern = Pattern.compile("^" + pattern);
         this.phantom = phantom;
         this.ignore = ignore;
     }

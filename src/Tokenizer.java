@@ -47,4 +47,8 @@ public class Tokenizer {
             source = source.substring(best.value().length()); //skip to the next begin spot.
         }
     }
+
+    public String source() {
+        return source;
+    }
 }

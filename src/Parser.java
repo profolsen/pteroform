@@ -38,7 +38,7 @@ public class Parser {
         }
         Token next = source.next(possibleParses, false);  //just look ahead.
         if(next == null) {
-            System.out.println("pteroform: Syntax Error: Expected " + possibleParses);
+            System.out.println("pteroform: Syntax Error: Expected " + possibleParses + " For " + source.source());
             return null;
         } else {
             ArrayList<Symbol> expansion = parseTable.get(next.type()).get(r.head());

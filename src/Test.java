@@ -46,7 +46,7 @@ public class Test {
         System.out.println(F + " (first--->) " + F.first());
 
         Grammar g = new Grammar();
-        g.addTerminals(a, b, times, plus, new Terminal("whitespace", "^\\s+", false, true));
+        g.addTerminals(a, b, times, plus, new Terminal("whitespace", "\\s+", false, true));
         g.addRules(E, E1, T, T1, F);
 
         HashMap<Rule, HashSet<Terminal>> followMap = g.follow();
@@ -68,6 +68,23 @@ public class Test {
         System.out.println(g);
         Term t = p.parse("b*  \ta+a *   b+b+b*a+a+a");
         System.out.println(t);
+
+        System.out.println(GrammarParser.grammar.parseTable());
+        Parser gp = new Parser(GrammarParser.grammar);
+        String longerTest =
+                "rules {" +
+                    "endOfOptions options[phantom] --> epsilon; " +
+                    "endOfOptions --> phantom endOfOptions; " +
+                    "endOfOptions --> ignore endOfOptions; " +
+                    "options --> optionToken lbracket endOfOptions rbracket; " +
+                    "endOfRule options[phantom] --> identifier endOfRule; " +
+                    "endOfRule --> epsilon; " +
+                    "rule --> identifier options arrow endOfRule semicolon rule; " +
+                    "rule --> epsilon; " +
+                    "rules --> rulesToken lbrace rule rbrace; " +
+                "}";
+        Term grammar = gp.parse(longerTest);
+        System.out.println(grammar);
         /*
         Terminal whitespace = new Terminal("whitespace", "^\\s+", );
         HashSet<Terminal> ignore = new HashSet<Terminal>();
