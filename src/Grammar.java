@@ -148,16 +148,58 @@ public class Grammar {
     public String toString() {
         String ans = "terminals {\n";
         for(Terminal t : terminals) {
-            ans += "\t" + t + ";\n";
+            ans += asString(t) + "\n";
         }
         ans += "}\nrules {\n";
         for(Rule r : rules) {
-            for(ArrayList<Symbol> expansion : r) {
-                ans += "\t" + r + " --> " + expansion + ";\n";
-            }
+            ans += asString(r) + "\n";
         }
         ans += "}";
         return ans;
+    }
+
+    private String asString(Terminal t) {
+        if(t.equals(Terminal.EOF) || t.equals(Terminal.epsilon)) {
+            return "";
+        }
+        String ans = "\tpattern " + t.name() + " " + optionsAsString(t) + " /" + t.pattern() + "/;";
+        return ans;
+    }
+
+    private String optionsAsString(Terminal t) {
+        String ans = "[";
+        if(t.phantom()) {
+            ans += "phantom ";
+        }
+        if(t.ignore()) {
+            ans += "ignore ";
+        }
+        ans += "]";
+        if(ans.length() > 2) return ans;
+        return "";
+    }
+
+    private String asString(Rule r) {
+        String ans = "";
+        boolean first = true;
+        for(ArrayList<Symbol> expansion : r) {
+            ans += "\t" + r.head() + (first ? optionsAsString(r) : "") +  " --> ";
+            first = false;
+            for(int i = 0; i < expansion.size() - 1; i++) {
+                ans += (expansion.get(i) instanceof Rule ? expansion.get(i) : ((Terminal)expansion.get(i)).name()) + " ";
+            }
+            if(expansion.size() > 0) {
+                ans += expansion.get(expansion.size() - 1) + ";\n";
+            }
+        }
+        return ans.substring(0, ans.length() - 1); //get rid of final \n.
+    }
+
+    private String optionsAsString(Rule r) {
+        if(phantomRules().contains(r)) {
+            return "[phantom]";
+        }
+        return "";
     }
 
     public HashSet<Terminal> ignore() {

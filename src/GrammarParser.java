@@ -4,23 +4,23 @@
 public class GrammarParser {
     public static final Grammar grammar = new Grammar();
     static {
-        Terminal semicolon = Terminal.keyword(";", true);
-        Terminal arrow = Terminal.keyword("-->", true);
-        Terminal lbracket = Terminal.keyword("[", true);
-        Terminal phantom = Terminal.keyword("phantom", false);
-        Terminal ignore = Terminal.keyword("ignore", false);
-        Terminal rbracket = Terminal.keyword("]", true);
+        Terminal semicolon = Terminal.keyword("semicolon", ";", true);
+        Terminal arrow = Terminal.keyword("arrow", "-->", true);
+        Terminal lbracket = Terminal.keyword("lbracket", "[", true);
+        Terminal phantom = Terminal.keyword("phantom", "phantom", false);
+        Terminal ignore = Terminal.keyword("ignore", "ignore", false);
+        Terminal rbracket = Terminal.keyword("rbracker", "]", true);
         Terminal clearspace = new Terminal("clearspace", "\\s+", false, true);
         Terminal identifier = new Terminal("identifier", "[a-zA-Z][a-zA-Z0-9]*", false, false);
         Terminal epsilon = Terminal.epsilon;
-        Terminal lbrace = Terminal.keyword("{", true);
-        Terminal rbrace = Terminal.keyword("}", true);
-        Terminal rulesToken = Terminal.keyword("rules", true);
+        Terminal lbrace = Terminal.keyword("lbrace", "{", true);
+        Terminal rbrace = Terminal.keyword("rbrace", "}", true);
+        Terminal rulesToken = Terminal.keyword("rulesToken", "rules", true);
 
         Terminal patternToken = new Terminal("patternToken", "(?<!/)/(?!/).*(?<!/)/(?!/)", false, false);
-        Terminal keyword = Terminal.keyword("keyword", false);
-        Terminal pattern = Terminal.keyword("pattern", false);
-        Terminal terminalsToken = Terminal.keyword("terminals", true);
+        Terminal keyword = Terminal.keyword("keyword", "keyword", false);
+        Terminal pattern = Terminal.keyword("pattern", "pattern", false);
+        Terminal terminalsToken = Terminal.keyword("terminalsToken", "terminals", true);
 
 
 

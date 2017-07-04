@@ -77,12 +77,15 @@ public class Terminal implements Symbol{
         }
     }
 
-    public static Terminal keyword(String keyword, boolean phantom) {
-        Terminal ans = new Terminal(keyword, "^\\Q" + keyword + "\\E", phantom, false);
+    public static Terminal keyword(String name, String keyword, boolean phantom) {
+        Terminal ans = new Terminal(name, "^\\Q" + keyword + "\\E", phantom, false);
         return ans;
     }
 
     public boolean ignore() {
         return ignore;
     }
+
+    public String name() { return name; }
+    public String pattern() { return pattern.pattern(); }
 }

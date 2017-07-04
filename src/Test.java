@@ -15,10 +15,10 @@ public class Test {
         Probably going to use the stack based parsing algorithm described here:
         http://www3.cs.stonybrook.edu/~cse304/Fall08/Lectures/parser-handout.pdf
          */
-        Terminal a = Terminal.keyword("a", false);
-        Terminal b = Terminal.keyword("b", false);
-        Terminal times = Terminal.keyword("*", true);
-        Terminal plus = Terminal.keyword("+", true);
+        Terminal a = Terminal.keyword("a","a", false);
+        Terminal b = Terminal.keyword("b", "b", false);
+        Terminal times = Terminal.keyword("times", "*", true);
+        Terminal plus = Terminal.keyword("plus", "+", true);
 
         Rule F = new Rule("F", true);
         F.addExpansion(a);
@@ -70,19 +70,9 @@ public class Test {
         System.out.println(t);
 
         System.out.println(GrammarParser.grammar.parseTable());
+        System.out.println(GrammarParser.grammar.toString());
         Parser gp = new Parser(GrammarParser.grammar);
         String longerTest =
-                /*"rules {" +
-                    "endOfOptions options[phantom] --> epsilon; " +
-                    "endOfOptions --> phantom endOfOptions; " +
-                    "endOfOptions --> ignore endOfOptions; " +
-                    "options --> optionToken lbracket endOfOptions rbracket; " +
-                    "endOfRule options[phantom] --> identifier endOfRule; " +
-                    "endOfRule --> epsilon; " +
-                    "rule --> identifier options arrow endOfRule semicolon rule; " +
-                    "rule --> epsilon; " +
-                    "rules --> rulesToken lbrace rule rbrace; " +
-                "}";*/
                 "terminals {\n" +
                         "\tkeyword semicolon [phantom] /;/;\n" +
                         "\tkeyword arrow [phantom] /-->/;\n" +
@@ -119,6 +109,42 @@ public class Test {
                         "\ts --> terminals rules;\n" +
                         "\n" +
                         "}";
+
+        longerTest = "terminals {\n" +
+                "\tpattern identifier  /^[a-zA-Z][a-zA-Z0-9]*/;\n" +
+                "\tpattern rbracker [phantom ] /^^\\Q]\\E/;\n" +
+                "\tpattern lbrace [phantom ] /^^\\Q{\\E/;\n" +
+                "\tpattern rulesToken [phantom ] /^^\\Qrules\\E/;\n" +
+                "\tpattern rbrace [phantom ] /^^\\Q}\\E/;\n" +
+                "\tpattern arrow [phantom ] /^^\\Q-->\\E/;\n" +
+                "\tpattern patternToken  /^(?<!/)/(?!/).*(?<!/)/(?!/)/;\n" +
+                "\tpattern pattern  /^^\\Qpattern\\E/;\n" +
+                "\n" +
+                "\tpattern phantom  /^^\\Qphantom\\E/;\n" +
+                "\tpattern clearspace [ignore ] /^\\s+/;\n" +
+                "\tpattern lbracket [phantom ] /^^\\Q[\\E/;\n" +
+                "\tpattern terminalsToken [phantom ] /^^\\Qterminals\\E/;\n" +
+                "\tpattern ignore  /^^\\Qignore\\E/;\n" +
+                "\tpattern keyword  /^^\\Qkeyword\\E/;\n" +
+                "\tpattern semicolon [phantom ] /^^\\Q;\\E/;\n" +
+                "}\n" +
+                "rules {\n" +
+                "\tgrammar --> terminals rules;\n" +
+                "\toptions --> epsilon;\n" +
+                "\toptions --> lbracket endOfOptions rbracker;\n" +
+                "\trule --> identifier options arrow endOfRule semicolon rule;\n" +
+                "\trule --> epsilon;\n" +
+                "\trules[phantom] --> rulesToken lbrace rule rbrace;\n" +
+                "\tterminal --> epsilon;\n" +
+                "\tterminal --> keyword identifier options patternToken semicolon terminal;\n" +
+                "\tterminal --> pattern identifier options patternToken semicolon terminal;\n" +
+                "\tendOfOptions[phantom] --> epsilon;\n" +
+                "\tendOfOptions --> phantom endOfOptions;\n" +
+                "\tendOfOptions --> ignore endOfOptions;\n" +
+                "\tendOfRule[phantom] --> identifier endOfRule;\n" +
+                "\tendOfRule --> epsilon;\n" +
+                "\tterminals[phantom] --> terminalsToken lbrace terminal rbrace;\n" +
+                "}";
         Term grammar = gp.parse(longerTest);
         System.out.println(grammar);
         /*
