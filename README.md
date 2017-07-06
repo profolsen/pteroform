@@ -92,7 +92,7 @@ Examples:
 
 <pre>
 identifier($varname) requires 
-     declaration($varname) near block(*) as
+     declaration($varname) in block(*) as
      "Variable $varname never declared";</pre>
      
 1. `*` matches 0 or many arguments.
@@ -103,7 +103,7 @@ When `$VARIABLE` appears on the right hand side of `requires` it is replaced wit
 5. `once` means that the term left of it should not appear more than once.
 6. `or` signifies two alternative terms.  Either being matched means match success.
 7. `and` signifies two requirements.  Either failing to match means no match failure.
-8. `near` Gives a parent term which both the left and right hand side (of `requires`) must be under.
+8. `in` Gives a parent term which both the left and right hand side (of `requires`) must be under.
 
 Restrictions:
 1. No negative search.
