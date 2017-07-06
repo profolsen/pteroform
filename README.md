@@ -82,5 +82,25 @@ If a rule with a left hand side of `Z` is given the phantom option, then `Z` wil
 The ignore option is also available for non-terminals, but has no effects because it is not yet implemented.
 <h4>Additional Syntax Checks</h4>
 
+Examples:
+<pre>rule(left, options(*), *, $X, *) 
+     requires terminal($X, *) or rule($X, *) as
+     "Undefined terminal or non-terminal symbol $X";</pre>
+     
+<pre>terminal($name, *) once as
+     "Duplicate terminal definition as $name";</pre>
 
-
+<pre>
+identifier($varname) requires 
+     declaration($varname) near block(*) as
+     "Variable $varname never declared";</pre>
+     
+1. `*` matches 0 or many arguments.
+2. `+`  matches 1 or many arguments.
+3. `{x, y}`  matches at least x arguments, at most y arguments.
+4. `$VARIABLE` all structure from this point downward is bound to variable.
+When `$VARIABLE` appears on the right hand side of `requires` it is replaced with the term `$VARIABLE` is equal to.
+5. `once` means that the term left of it should not appear more than once.
+6. `or` signifies two alternative terms.  Either being matched means match success.
+7. `and` signifies two requirements.  Either failing to match means no match failure.
+8. `near` Gives a parent term which both the left and right hand side (of `requires`) must be under.
