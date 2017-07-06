@@ -104,3 +104,10 @@ When `$VARIABLE` appears on the right hand side of `requires` it is replaced wit
 6. `or` signifies two alternative terms.  Either being matched means match success.
 7. `and` signifies two requirements.  Either failing to match means no match failure.
 8. `near` Gives a parent term which both the left and right hand side (of `requires`) must be under.
+
+Restrictions:
+1. No negative search.
+Given a subterm, another subterm is searched for.
+The absence of a given subterm can never be ruled out.
+2. First order.
+variables are not allowed to be present except at leaves of terms.
