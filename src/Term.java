@@ -150,5 +150,7 @@ public class Term {
         public Term generate() {
             return new Term(head, expansion, subTerms, tokens);
         }
+
+
     }
 }

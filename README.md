@@ -3,7 +3,7 @@ Pteroform
 
 This project provides an implementation of an interpreter interpreter.
 Two input files are to be provided to the main program:
-1. a grammar-interpreter file.  This file contains the grammar for the language, which the parser uses to produce terms.  
+1. a grammar-interpreter file.  This file contains the grammar for the language, which the parser uses to produce terms. 
 This file also contains additional syntax checks to be performed on the term as well as a description of how to execute the program a term represents.
 2. a program file.  This file contains a program to be interpreted.
 
@@ -44,6 +44,32 @@ For example,
 <pre>pattern clearspace [ignore] /\s+/;</pre>
 creates a terminal named clearspace which will match and remove all clearspace from the input.
 The clearspace can still be used to separate other tokens.
+
+<h4>Rules</h4>
+The rules (or productions) of a grammar tell the parser how to structure parsed tokens from the program file.
+An example of some rules describing a grammar is:
+<pre>rules {
+    S --> a S b;
+    S --> epsilon;
+}
+</pre>
+In this example, `a`, `b`, are terminals, each capable of reading the next 'a' or 'b' string from input, respectively.
+`epsilon` is a special terminal available to use in any production.
+It stands in for an empty string.
+This grammar describes how to structure the parsed tokens in strings beginning with some number of a's and followed by the same number of b's.
+For example, the string `aaaaabbbbb` will be parsed into ten tokens: 5 a's and 5 b's.
+This grammar gives the correct way to structure these tokens into a single term.
+That term will be:
+`S(a, S(a, S(a, S(a, S(a, S(), b), b), b), b), b)`.
+
+There are some restrictions on rules:
+1. Every terminal that appears on the right hand side of a rule (to the right of the arrow symbol `-->`) must be defined in the `terminals { ... }` part of the grammar.
+An important exception is the `epsilon` terminal, which is automatically defined for every grammar.
+2. Any non-terminal symbol that appears on the right hand side of a rule must appear on the left hand side of a rule at least once.
+
+Just like in the example above, a non-terminal can appear on the left hand side of multiple rules (The symbol 'S' is on the left hand side of both rules in this grammar).
+
+<h4>Additional Syntax Checks</h4>
 
 
 

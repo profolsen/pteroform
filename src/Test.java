@@ -147,6 +147,7 @@ public class Test {
                 "}";
         Term grammar = gp.parse(longerTest);
         System.out.println(grammar);
+        test2();
         /*
         Terminal whitespace = new Terminal("whitespace", "^\\s+", );
         HashSet<Terminal> ignore = new HashSet<Terminal>();
@@ -162,5 +163,20 @@ public class Test {
         t.deleteAll(plus);
         t.deleteAll(Terminal.epsilon);
         System.out.println(t);*/
+    }
+
+    private static void test2() {
+        Grammar g = new Grammar();
+        Terminal a = Terminal.keyword("a", "a", false);
+        Terminal b = Terminal.keyword("b", "b", false);
+        Terminal clearspace = new Terminal("clearspace", "\\s+", false, true);
+
+        Rule r1 = new Rule("S", false);
+        r1.addExpansion(a, r1, b);
+        r1.addExpansion(Terminal.epsilon);
+        g.addTerminals(a, b, clearspace);
+        g.addRules(r1);
+        Parser p = new Parser(g);
+        System.out.println(p.parse("a  a a a  a\tbbbb\nb"));
     }
 }
