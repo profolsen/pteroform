@@ -105,9 +105,16 @@ When `$VARIABLE` appears on the right hand side of `requires` it is replaced wit
 7. `and` signifies two requirements.  Either failing to match means no match failure.
 8. `in` Gives a parent term which both the left and right hand side (of `requires`) must be under.
 
-Restrictions:
+<b>Restrictions:</b>
 1. No negative search.
 Given a subterm, another subterm is searched for.
 The absence of a given subterm can never be ruled out.
 2. First order.
 variables are not allowed to be present except at leaves of terms.
+
+<b>Process:</b>
+1. We search the parsed term (pt) for each occurrence of left hand side of the `requires`.
+2. Every variable on the left hand side is matched to the corresponding sub-term in the pt.
+3. We search the pt for a term or terms which satisfy the condition on the right side of the `requires`.
+4. If no satisfying term or terms can be found, print the error message appearing after the `as`, using variable interpolation to provide detailed information.
+
