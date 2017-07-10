@@ -1,8 +1,11 @@
+import java.io.File;
+import java.util.Scanner;
+
 /**
  * Created by po917265 on 7/1/17.
  */
 public class GrammarParser {
-    public static final Grammar grammar = new Grammar();
+    public static Grammar grammar = new Grammar();
     static {
         Terminal semicolon = Terminal.keyword("semicolon", ";", true);
         Terminal arrow = Terminal.keyword("arrow", "-->", true);
@@ -50,5 +53,14 @@ public class GrammarParser {
 
         grammar.addRules(s, rules, rule, endOfRule, endOfOptions, options, terminal, terminals);
         grammar.addTerminals(semicolon, arrow, clearspace, identifier, lbracket, rbracket, phantom, ignore, lbrace, rbrace, rulesToken, patternToken, keyword, pattern, terminalsToken);
+        bootstrap();
     }
+
+    private static void bootstrap() {
+        Parser p = new Parser(grammar);
+        String input = "";
+        Scanner scan = new Scanner(new File("bootstrap/bootstrap.ptero"));
+    }
+
+
 }
