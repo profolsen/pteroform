@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -59,7 +60,22 @@ public class GrammarParser {
     private static void bootstrap() {
         Parser p = new Parser(grammar);
         String input = "";
-        Scanner scan = new Scanner(new File("bootstrap/bootstrap.ptero"));
+        try {
+            Scanner scan = new Scanner(new File("bootstrap/bootstrap.ptero"));
+            while(scan.hasNextLine()) {
+                input += scan.nextLine() + "\n";
+            }
+            Term t = p.parse(input);
+            convertToGrammar();
+        } catch(IOException ioe) {
+            System.out.println("pteroform: fatal error: Can't open bootstrap/bootstrap.ptero.  Exiting.");
+            System.exit(1);
+        }
+    }
+
+    private static void convertToGrammar() {
+
+
     }
 
 
