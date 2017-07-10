@@ -46,7 +46,11 @@ public class Parser {
             while(tf.next() != null) {
                 Symbol s = tf.next();
                 if(s instanceof Terminal) {
-                    tf.setNext(source.next((Terminal)s, true));  //use it...
+                    Token t = source.next((Terminal)s, true);
+                    if(t == null) {
+                        System.out.println("pteroform: Syntax Error: Expected " + s + " For " + source.source());
+                    }
+                    tf.setNext(t);  //use it...
                 } else {
                     tf.setNext(parse((Rule)s, source));
                 }

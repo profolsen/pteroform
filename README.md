@@ -104,6 +104,9 @@ When `$VARIABLE` appears on the right hand side of `requires` it is replaced wit
 6. `or` signifies two alternative terms.  Either being matched means match success.
 7. `and` signifies two requirements.  Either failing to match means no match failure.
 8. `in` Gives a parent term which both the left and right hand side (of `requires`) must be under.
+9. `$VARIABLE:TYPE` the variable must have the specific type.
+Either `TYPE` terminal or `TYPE` non-terminal generated the term to which `$VARIABLE` is bound.
+
 
 <b>Restrictions:</b>
 1. No negative search.
