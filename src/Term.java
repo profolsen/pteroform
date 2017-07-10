@@ -101,6 +101,10 @@ public class Term {
         return ans;
     }
 
+    public int size() {
+        return expansion.size();
+    }
+
     public static class TermFactory {
         private HashMap<Integer, Term> subTerms;
         private HashMap<Integer, Token> tokens;

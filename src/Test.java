@@ -69,9 +69,9 @@ public class Test {
         Term t = p.parse("b*  \ta+a *   b+b+b*a+a+a");
         System.out.println(t);
 
-        System.out.println(GrammarParser.grammar.parseTable());
-        System.out.println(GrammarParser.grammar.toString());
-        Parser gp = new Parser(GrammarParser.grammar);
+        System.out.println(Bootstrap.grammar.parseTable());
+        System.out.println(Bootstrap.grammar.toString());
+        Parser gp = new Parser(Bootstrap.grammar);
         String longerTest =
                 "terminals {\n" +
                         "\tkeyword semicolon [phantom] /;/;\n" +

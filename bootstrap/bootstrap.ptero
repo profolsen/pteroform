@@ -13,7 +13,7 @@ terminals {
 	keyword keyword /keyword/;
 	keyword pattern /pattern/;
 	keyword terminalsToken [phantom] /terminals/;
-	pattern patternToken /(?<!//)//(?!//).*(?<!//)//(?!//)/;
+	pattern patternToken /(?<!/)/(?!/).*(?<!/)/(?!/)/;
 } rules {
 	s --> terminals rules;
 	endOfOptions [phantom] --> epsilon;
