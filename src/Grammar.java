@@ -151,8 +151,9 @@ public class Grammar {
             ans += asString(t) + "\n";
         }
         ans += "}\nrules {\n";
+        ans += asString(start) + "\n";
         for(Rule r : rules) {
-            ans += asString(r) + "\n";
+            if(!r.equals(start)) ans += asString(r) + "\n";
         }
         ans += "}";
         return ans;

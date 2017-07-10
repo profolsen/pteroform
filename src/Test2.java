@@ -8,12 +8,12 @@ import java.util.Scanner;
 public class Test2 {
     public static void main(String[] args) throws IOException
     {
-        Parser p = new Parser(Bootstrap.grammar);
-        Scanner scan = new Scanner(new File("bootstrap/bootstrap.ptero"));
+        System.out.println(Bootstrap.grammar);
+        /*Scanner scan = new Scanner(new File("bootstrap/bootstrap.ptero"));
         String input = "";
         while(scan.hasNextLine()) {
             input += scan.nextLine() + "\n";
         }
-        System.out.println(p.parse(input));
+        System.out.println(p.parse(input));*/
     }
 }

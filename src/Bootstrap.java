@@ -126,6 +126,7 @@ public class Bootstrap {
 
     private static void generateExpansions(Term term, HashMap<String, Rule> rules, HashMap<String, Terminal> terminals) {
         Term t = term;
+        String start = t.getToken(0).value(); //the first rule is the start rule.
         while(t.size() > 0) {
             Symbol[] expansion = new Symbol[t.size() - 3]; //-1 for id, -1 for options, -1 for recursion.
             for(int i = 2; i < t.size() - 1; i++) {
@@ -136,8 +137,9 @@ public class Bootstrap {
             rules.get(t.getToken(0).value()).addExpansion(expansion);
             t = t.getTerm(t.size() - 1);
         }
+        grammar.addRules(rules.get(start));
         for(Rule r : rules.values()) {
-            grammar.addRules(r);
+            if(!r.head().equals(start)) grammar.addRules(r);
         }
     }
 
