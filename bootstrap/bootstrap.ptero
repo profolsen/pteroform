@@ -15,6 +15,10 @@ terminals {
 	keyword terminalsToken [phantom] /terminals/;
 	pattern patternToken /(?<!/)/(?!/).*(?<!/)/(?!/)/;
 	keyword semanticsToken [phantom] /semantics/;
+	keyword requires [phantom] /requires/;
+	keyword as [phantom] /as/;
+	keyword lparen [phantom] /(/;
+	keyword rparen [phantom] /)/;
 
 } rules {
 	s --> terminals rules semantics;
@@ -37,5 +41,9 @@ terminals {
 
 	semantics --> semanticsToken lbrace semantic rbrace;
 	semantic --> epsilon;
+	semantic --> term requires condition as error;
+	termlist --> epsilon
+
+	term --> identifier lparen term rparen;
 }
 

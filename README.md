@@ -80,6 +80,9 @@ The phantom option applies to non-terminal symbols, not rules.
 If a rule with a left hand side of `Z` is given the phantom option, then `Z` will not appear in a term parsed by the grammar, even if there is another rule with `Z` on the left hand side that does not use the phantom option.
 
 The ignore option is also available for non-terminals, but has no effects because it is not yet implemented.
+
+<!--
+
 <h4>Additional Syntax Checks</h4>
 
 Examples:
@@ -121,3 +124,4 @@ variables are not allowed to be present except at leaves of terms.
 3. We search the pt for a term or terms which satisfy the condition on the right side of the `requires`.
 4. If no satisfying term or terms can be found, print the error message appearing after the `as`, using variable interpolation to provide detailed information.
 
+-->
