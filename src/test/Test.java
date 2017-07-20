@@ -1,3 +1,12 @@
+package test;
+
+import grammar.Grammar;
+import grammar.Rule;
+import grammar.Symbol;
+import grammar.Terminal;
+import parsing.Parser;
+import parsing.Term;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -6,7 +15,7 @@ public class Test {
     public static void main(String[] args) {
 
         /*
-        Test from: http://faculty.ycp.edu/~dhovemey/fall2010/cs340/lecture/lecture9.html
+        test.Test from: http://faculty.ycp.edu/~dhovemey/fall2010/cs340/lecture/lecture9.html
          */
         /*
         It seems there might??? be an error the parse table in the above.  The following was
@@ -21,23 +30,23 @@ public class Test {
         Terminal plus = Terminal.keyword("plus", "+", true);
 
         Rule F = new Rule("F", true);
-        F.addExpansion(a);
-        F.addExpansion(b);
+        F.addDerivation(a);
+        F.addDerivation(b);
 
         Rule T1 = new Rule("T1", true);
-        T1.addExpansion(Terminal.epsilon);
-        T1.addExpansion(times, F, T1);
+        T1.addDerivation(Terminal.epsilon);
+        T1.addDerivation(times, F, T1);
 
         Rule T = new Rule("T", false);
-        T.addExpansion(F, T1);
+        T.addDerivation(F, T1);
 
         Rule E1 = new Rule("E1", true);
-        E1.addExpansion(Terminal.epsilon);
+        E1.addDerivation(Terminal.epsilon);
 
-        E1.addExpansion(plus, T, E1);
+        E1.addDerivation(plus, T, E1);
 
         Rule E = new Rule("E", false);
-        E.addExpansion(T, E1);
+        E.addDerivation(T, E1);
 
         System.out.println(E + " (first--->) " + E.first());
         System.out.println(E1 + " (first--->) " + E1.first());
@@ -149,11 +158,11 @@ public class Test {
         System.out.println(grammar);
         test2();
         /*
-        Terminal whitespace = new Terminal("whitespace", "^\\s+", );
-        HashSet<Terminal> ignore = new HashSet<Terminal>();
+        grammar.Terminal whitespace = new grammar.Terminal("whitespace", "^\\s+", );
+        HashSet<grammar.Terminal> ignore = new HashSet<grammar.Terminal>();
         ignore.add(whitespace);
-        System.out.println(p.parse(E, new Tokenizer("a+a", ignore)));
-        Term t = p.parse(E, new Tokenizer("b*  \ta+a *   b+b+b*a+a+a", ignore));
+        System.out.println(p.parse(E, new parsing.Tokenizer("a+a", ignore)));
+        parsing.Term t = p.parse(E, new parsing.Tokenizer("b*  \ta+a *   b+b+b*a+a+a", ignore));
         System.out.println(t);
         t.promote("F");
         t.promote("E1");
@@ -161,7 +170,7 @@ public class Test {
         System.out.println(t);
         t.deleteAll(times);
         t.deleteAll(plus);
-        t.deleteAll(Terminal.epsilon);
+        t.deleteAll(grammar.Terminal.epsilon);
         System.out.println(t);*/
     }
 
@@ -172,8 +181,8 @@ public class Test {
         Terminal clearspace = new Terminal("clearspace", "\\s+", false, true);
 
         Rule r1 = new Rule("S", false);
-        r1.addExpansion(a, r1, b);
-        r1.addExpansion(Terminal.epsilon);
+        r1.addDerivation(a, r1, b);
+        r1.addDerivation(Terminal.epsilon);
         g.addTerminals(a, b, clearspace);
         g.addRules(r1);
         Parser p = new Parser(g);

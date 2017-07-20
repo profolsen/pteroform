@@ -1,6 +1,12 @@
+package parsing;
+
+import grammar.Rule;
+import grammar.Symbol;
+import grammar.Terminal;
+import grammar.Token;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 
 /**
  * Created by po917265 on 6/30/17.

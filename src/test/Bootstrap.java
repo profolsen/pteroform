@@ -1,7 +1,12 @@
+package test;
+
+import grammar.*;
+import parsing.Parser;
+import parsing.Term;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Scanner;
 
 /**
@@ -31,28 +36,28 @@ public class Bootstrap {
 
 
         Rule endOfOptions = new Rule("endOfOptions", true);
-        endOfOptions.addExpansion(epsilon);
-        endOfOptions.addExpansion(phantom, endOfOptions);
-        endOfOptions.addExpansion(ignore, endOfOptions);
+        endOfOptions.addDerivation(epsilon);
+        endOfOptions.addDerivation(phantom, endOfOptions);
+        endOfOptions.addDerivation(ignore, endOfOptions);
         Rule options = new Rule("options", false);
-        options.addExpansion(epsilon);
-        options.addExpansion(lbracket, endOfOptions, rbracket);
+        options.addDerivation(epsilon);
+        options.addDerivation(lbracket, endOfOptions, rbracket);
         Rule terminal = new Rule("terminal", false);
-        terminal.addExpansion(epsilon);
-        terminal.addExpansion(keyword, identifier, options, patternToken, semicolon, terminal);
-        terminal.addExpansion(pattern, identifier, options, patternToken, semicolon, terminal);
+        terminal.addDerivation(epsilon);
+        terminal.addDerivation(keyword, identifier, options, patternToken, semicolon, terminal);
+        terminal.addDerivation(pattern, identifier, options, patternToken, semicolon, terminal);
         Rule terminals = new Rule("terminals", true);
-        terminals.addExpansion(terminalsToken, lbrace, terminal, rbrace);
+        terminals.addDerivation(terminalsToken, lbrace, terminal, rbrace);
         Rule endOfRule = new Rule("endOfRule", true);
-        endOfRule.addExpansion(identifier, endOfRule);
-        endOfRule.addExpansion(epsilon);
+        endOfRule.addDerivation(identifier, endOfRule);
+        endOfRule.addDerivation(epsilon);
         Rule rule = new Rule("rule", false);
-        rule.addExpansion(identifier, options, arrow, endOfRule, semicolon, rule);
-        rule.addExpansion(epsilon);
+        rule.addDerivation(identifier, options, arrow, endOfRule, semicolon, rule);
+        rule.addDerivation(epsilon);
         Rule rules = new Rule("rules", true);
-        rules.addExpansion(rulesToken, lbrace, rule, rbrace);
+        rules.addDerivation(rulesToken, lbrace, rule, rbrace);
         Rule s = new Rule("grammar", false);
-        s.addExpansion(terminals, rules);
+        s.addDerivation(terminals, rules);
 
         grammar.addRules(s, rules, rule, endOfRule, endOfOptions, options, terminal, terminals);
         grammar.addTerminals(semicolon, arrow, clearspace, identifier, lbracket, rbracket, phantom, ignore, lbrace, rbrace, rulesToken, patternToken, keyword, pattern, terminalsToken);
@@ -134,7 +139,7 @@ public class Bootstrap {
                             rules.get(t.getToken(i).value());
                 expansion[i - 2] = correct;
             }
-            rules.get(t.getToken(0).value()).addExpansion(expansion);
+            rules.get(t.getToken(0).value()).addDerivation(expansion);
             t = t.getTerm(t.size() - 1);
         }
         grammar.addRules(rules.get(start));

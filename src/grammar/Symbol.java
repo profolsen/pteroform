@@ -1,3 +1,7 @@
+package grammar;
+
+import grammar.Terminal;
+
 import java.util.HashSet;
 
 /**

@@ -10,7 +10,7 @@ This file also contains additional syntax checks to be performed on the term as 
 The program file's format is dependent entirely on the grammar, syntax checks, and interpreter specified in the grammar-interpreter file.
 Therefore, the remainder of this document focusses on the format and function of the grammar-interpreter file.
 
-<h3>Grammar Syntax</h3>
+<h3>grammar.Grammar Syntax</h3>
 A grammar for a language is made up of a list of terminals and a list of non-terminals called rules.
 
 <h4>Terminals.</h4>
@@ -30,7 +30,7 @@ An example of a keyword terminal is:
 <pre>keyword dot /./;</pre>
 In this example, a terminal is created called dot which can only be used by the tokenizer to generate tokens with the string value '.'.
 
-<b>Terminal Options</b>
+<b>grammar.Terminal Options</b>
 Terminals have two options:
 1. Phantom Terminals.
 Though these terminals will be parsed and can be used in rule productions, they will never appear in a term created by the parser from a program file.
@@ -70,7 +70,7 @@ An important exception is the `epsilon` terminal, which is automatically defined
 
 Just like in the example above, a non-terminal can appear on the left hand side of multiple rules (The symbol 'S' is on the left hand side of both rules in this grammar).
 
-As with terminals (see <b>Token Options</b> above), a rule can be assigned two options: phantom and ignore.
+As with terminals (see <b>grammar.Token Options</b> above), a rule can be assigned two options: phantom and ignore.
 A rule using the phantom option will be parsed and structured, but the non-terminal on the left side of a phantom rule will not appear anywhere in the term parsed using the grammar.
 For example, if in the grammar above the rule Y were defined:
 <pre>Y [phantom] --> epsilon;</pre>

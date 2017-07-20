@@ -1,3 +1,5 @@
+package grammar;
+
 import java.util.HashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -5,7 +7,7 @@ import java.util.regex.Pattern;
 /**
  * Created by po917265 on 6/29/17.
  */
-public class Terminal implements Symbol{
+public class Terminal implements Symbol {
 
     public static final Terminal epsilon = new Terminal("epsilon");
     public static final Terminal EOF = new Terminal("EOF");

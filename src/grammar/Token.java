@@ -1,3 +1,7 @@
+package grammar;
+
+import grammar.Terminal;
+
 /**
  * Created by po917265 on 6/30/17.
  */
