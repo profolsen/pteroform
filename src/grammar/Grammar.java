@@ -29,7 +29,9 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- * Created by po917265 on 6/29/17.
+ * A Grammar is a set of rules that describe how to parse a string into a term.
+ * @author Paul Olsen
+ *
  */
 public class Grammar {
 
@@ -37,6 +39,9 @@ public class Grammar {
     private HashSet<Terminal> terminals;
     private Rule start;
 
+    /**
+     * Creates a Grammar.
+     */
     public Grammar() {
         rules = new HashSet<Rule>();
         terminals = new HashSet<Terminal>();
@@ -44,6 +49,11 @@ public class Grammar {
         start = null;
     }
 
+    /**
+     * Adds the given rules to this grammar.
+     * The first rule added to the grammar will become the start rule.
+     * @param list a list of rules.
+     */
     public void addRules(Rule... list) {
         for(Rule r : list) {
             rules.add(r);
@@ -53,12 +63,20 @@ public class Grammar {
         }
     }
 
+    /**
+     * Adds the list of terminals to the grammar.
+     * @param list a list of terminals.
+     */
     public void addTerminals(Terminal... list) {
         for(Terminal t : list) {
             terminals.add(t);
         }
     }
 
+    /**
+     * Computes the follow sets for each rule in the grammar.
+     * @return the follow sets for every rule in the grammar.
+     */
     public HashMap<Rule, HashSet<Terminal>> follow() {
         HashMap<Rule, HashSet<Terminal>> followMap = new HashMap<Rule, HashSet<Terminal>>();
         for(Rule r : rules) {
@@ -73,6 +91,10 @@ public class Grammar {
         return followMap;
     }
 
+    /**
+     * Generates a parse table for the grammar.
+     * @return the generated parse table.
+     */
     public HashMap<Terminal, HashMap<String, ArrayList<Symbol>>> parseTable() {
         HashMap<Terminal, HashMap<String, ArrayList<Symbol>>> answer = new HashMap<Terminal, HashMap<String, ArrayList<Symbol>>>();
         for(Terminal t : terminals) {
@@ -110,6 +132,10 @@ public class Grammar {
         return answer;
     }
 
+    /**
+     * Returns the start rule.
+     * @return the start rule.
+     */
     public Rule start() {
         return start;
     }
@@ -164,10 +190,18 @@ public class Grammar {
         return answer;
     }
 
+    /**
+     * Returns a set of all terminals.
+     * @return all the terminals in the grammar.
+     */
     public HashSet<Terminal> terminals() {
         return terminals;
     }
 
+    /**
+     * Returns a human readable string representation of the grammar.
+     * @return a string.
+     */
     public String toString() {
         String ans = "terminals {\n";
         for(Terminal t : terminals) {
@@ -226,6 +260,10 @@ public class Grammar {
         return "";
     }
 
+    /**
+     * Computes a set of all terminals that should be ignored.
+     * @return the computed set.
+     */
     public HashSet<Terminal> ignore() {
         HashSet<Terminal> ans = new HashSet<Terminal>();
         for(Terminal t : terminals) {
@@ -236,6 +274,10 @@ public class Grammar {
         return ans;
     }
 
+    /**
+     * computes a set of all phantom rules.
+     * @return the computed set.
+     */
     public HashSet<Rule> phantomRules() {
         HashSet<Rule> phantomRules = new HashSet<Rule>();
         for(Rule r : rules) {
@@ -244,6 +286,10 @@ public class Grammar {
         return phantomRules;
     }
 
+    /**
+     * Computes a set of all phantom terminals.
+     * @return the computed set.
+     */
     public HashSet<Terminal> phantomTerminals() {
         HashSet<Terminal> phantomTerminals = new HashSet<Terminal>();
         for(Terminal t : terminals) {
