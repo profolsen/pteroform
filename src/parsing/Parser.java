@@ -1,14 +1,6 @@
 package parsing;
 
 import grammar.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-
-/**
- * Created by po917265 on 6/29/17.
- */
 /*
 MIT License
 
@@ -32,6 +24,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+
+/**
+ * Created by po917265 on 6/29/17.
+ */
+
 public class Parser {
 
     private Grammar g;
@@ -65,8 +65,7 @@ public class Parser {
         }
         Token next = source.next(possibleParses, false);  //just look ahead.
         if(next == null) {
-            System.out.println("pteroform: Syntax Error: Expected " + possibleParses + " For " + source.source());
-            return null;
+            throw new SyntaxError("Expected " + possibleParses + " For " + source.source());
         } else {
             ArrayList<Symbol> expansion = parseTable.get(next.type()).get(r.head());
             Term.TermFactory tf = new Term.TermFactory(r.head(), expansion);
@@ -75,7 +74,7 @@ public class Parser {
                 if(s instanceof Terminal) {
                     Token t = source.next((Terminal)s, true);
                     if(t == null) {
-                        System.out.println("pteroform: Syntax Error: Expected " + s + " For " + source.source());
+                        throw new SyntaxError("Expected " + s + " For " + source.source());
                     }
                     tf.setNext(t);  //use it...
                 } else {
