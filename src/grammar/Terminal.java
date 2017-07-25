@@ -28,21 +28,27 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by po917265 on 6/29/17.
+ * This class represents a Terminal.
  */
 public class Terminal implements Symbol {
 
+    /**
+     * The terminal representing epsilon, the empty string.
+     * This terminal is always a possible next terminal in any string.
+     */
     public static final Terminal epsilon = new Terminal("epsilon");
+
+    /**
+     * The terminal representing EOF (end of file).
+     * This terminal only matches the very end of a parse string.
+     */
     public static final Terminal EOF = new Terminal("EOF");
 
     private Pattern pattern;
     private String name;
     private boolean phantom, ignore;
 
-    public String match(String input) {
-        return null;
-    }
-
+    //for the epsilon and eof terminals only.
     private Terminal(String name) {  //used only to create the epsilon terminal.
         this.name = name;
         pattern = null;
@@ -50,6 +56,18 @@ public class Terminal implements Symbol {
         ignore = false;
     }
 
+    /**
+     * Creates a Terminal.
+     * @param name the name of the terminal.
+     * @param pattern the pattern the terminal matches (a java regular expression).
+     *                An '^' is automatically added to the pattern used here, since the pattern must match at the beginning of the input string.
+     * @param phantom whether the terminal should be a phantom.
+     * @param ignore when true, ignore all strings matching this terminal in the input.
+     *               An example of ignore would typically be clearspace in most programming languages.
+     *               Clearspace should be ignored and typically serves no structural purpose except for separating tokens in the input.
+     *               Likewise, terminals for which ignore is true can only be used to separate meaningful tokens in the input.
+     *               In all other cases they will be ignored (as if they were not present in the input).
+     */
     public Terminal(String name, String pattern, boolean phantom, boolean ignore) {
         this.name = name;
         this.pattern = Pattern.compile("^" + pattern);
@@ -57,10 +75,12 @@ public class Terminal implements Symbol {
         this.ignore = ignore;
     }
 
+    @Override
     public int hashCode() {
         return name.hashCode();
     }
 
+    @Override
     public boolean equals(Object other) {
         if(!(other instanceof Terminal)) {
             return false;
@@ -69,6 +89,7 @@ public class Terminal implements Symbol {
         }
     }
 
+    @Override
     public HashSet<Terminal> first() {
         HashSet<Terminal> ans = new HashSet<Terminal>();
         ans.add(this);
@@ -80,6 +101,7 @@ public class Terminal implements Symbol {
         return phantom;
     }
 
+    @Override
     public String toString() {
         if(this.equals(epsilon)) {
             return "epsilon";
@@ -87,6 +109,11 @@ public class Terminal implements Symbol {
         return name;
     }
 
+    /**
+     * If this terminal matches the input, return a token storing this terminal and the part of the string that matched this terminal.
+     * @param input some string.
+     * @return a token or null if no match is possible.
+     */
     public Token parse(String input) {
         if(this.equals(Terminal.EOF)) {
             return input.length() == 0 ? new Token(this, "") : null;
@@ -102,15 +129,38 @@ public class Terminal implements Symbol {
         }
     }
 
+    /**
+     * Creates a keyword token.
+     * This method is for convenience.
+     * It is equivalent to
+     * {@code new Terminal(name, "^\\Q" + keyword + "\\E", phantom, false)}
+     * @param name the name of the keyword.
+     * @param keyword the keyword this terminal should match.
+     * @param phantom if true, then the terminal will be a phantom.
+     * @return a new terminal.
+     */
     public static Terminal keyword(String name, String keyword, boolean phantom) {
         Terminal ans = new Terminal(name, "^\\Q" + keyword + "\\E", phantom, false);
         return ans;
     }
 
+    /**
+     * Returns true if a terminal of this type should be ignored during parsing.
+     * @return true if this terminal is an ignore terminal.
+     */
     public boolean ignore() {
         return ignore;
     }
 
+    /**
+     * Returns the name of this terminal.
+     * @return the name of this terminal.
+     */
     public String name() { return name; }
+
+    /**
+     * Returns the pattern for this terminal.
+     * @return the pattern for this terminal.
+     */
     public String pattern() { return pattern.pattern(); }
 }

@@ -36,7 +36,7 @@ import java.util.Iterator;
  */
 public class Rule implements Symbol, Iterable<ArrayList<Symbol>> {
 
-    private ArrayList<ArrayList<Symbol>> expansions;
+    private ArrayList<ArrayList<Symbol>> derivations;
     private String head;
     private boolean phantom;
 
@@ -47,7 +47,7 @@ public class Rule implements Symbol, Iterable<ArrayList<Symbol>> {
      */
     public Rule(String head, boolean phantom) {
         this.head = head;
-        expansions = new ArrayList<ArrayList<Symbol>>();
+        derivations = new ArrayList<ArrayList<Symbol>>();
         this.phantom = phantom;
     }
 
@@ -80,7 +80,7 @@ public class Rule implements Symbol, Iterable<ArrayList<Symbol>> {
      */
     public HashSet<Terminal> first() {
         HashSet<Terminal> answer = new HashSet<Terminal>();
-        for(ArrayList<Symbol> expansion : expansions) {
+        for(ArrayList<Symbol> expansion : derivations) {
             answer.addAll(first(expansion));
         }
         //System.out.println(head + " returning: " + answer);
@@ -118,7 +118,7 @@ public class Rule implements Symbol, Iterable<ArrayList<Symbol>> {
         for(int i = 0; i < derivation.length; i++) {
             expansion.add(derivation[i]);
         }
-        expansions.add(expansion);
+        derivations.add(expansion);
     }
 
     /**
@@ -132,7 +132,7 @@ public class Rule implements Symbol, Iterable<ArrayList<Symbol>> {
 
     @Override
     public Iterator<ArrayList<Symbol>> iterator() {
-        return expansions.iterator();
+        return derivations.iterator();
     }
 
     /**

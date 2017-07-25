@@ -32,19 +32,34 @@ public class Token {
     private Terminal type;
     private String value;
 
+    /**
+     * Creates a new Token.
+     * @param type the type of this token.
+     *             I.e., what terminal generated this token.
+     * @param value the string value of this token.
+     */
     public Token(Terminal type, String value) {
         this.type = type;
         this.value = value;
     }
 
+    @Override
     public String toString() {
         return value + ":" + type;
     }
 
+    /**
+     * Returns the type of this token.
+     * @return the type of this token.
+     */
     public Terminal type() {
         return type;
     }
 
+    /**
+     * Returns the value of this token.
+     * @return the value of this token.
+     */
     public String value() {
         return value;
     }

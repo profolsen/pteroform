@@ -28,11 +28,22 @@ import grammar.Terminal;
 import java.util.HashSet;
 
 /**
- * Created by po917265 on 6/29/17.
+ * Symbol is a common interface for both Rules and Terminals.
  */
 public interface Symbol {
 
+    /**
+     * Returns the first set of the symbol.
+     * For terminals, this returns the terminal itself.
+     * For rules, the first set, as discussed in <a href="http://faculty.ycp.edu/~dhovemey/fall2010/cs340/lecture/lecture9.html">David Hovemeyer's</a> lecture notes is generated and returned.
+     * @return the first set for this terminal.
+     */
     public HashSet<Terminal> first();
 
+    /**
+     * Returns true if this symbol is a phantom.
+     * Phantom symbols are used to recognize structure within a string, but do not appear in the final parsed term for the string.
+     * @return true if this symbol is a phantom.
+     */
     public boolean phantom();
 }
