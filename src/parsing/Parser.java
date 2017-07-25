@@ -29,7 +29,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 /**
- * Created by po917265 on 6/29/17.
+ * A Parser is an object that uses a grammar to generate a term from an input string.
+ * @author Paul Olsen
  */
 
 public class Parser {
@@ -37,11 +38,23 @@ public class Parser {
     private Grammar g;
     private HashMap<Terminal, HashMap<String, ArrayList<Symbol>>> parseTable;
 
+    /**
+     * Creates a new parser.
+     * The grammar in question needs to be suitable for LL(1) parsing.
+     * @param g a grammar.
+     */
     public Parser(Grammar g) {
         this.g = g;
         parseTable = g.parseTable();
     }
 
+    /**
+     * Parses the input string.
+     *
+     * @throws SyntaxError when the string cannot be parsed.
+     * @param s a string.
+     * @return a term for the parsed string.
+     */
     public Term parse(String s) {
         Term ans = parse(g.start(), new Tokenizer(s, g.ignore()));
         for(Rule r : g.phantomRules()) {
@@ -53,7 +66,7 @@ public class Parser {
         return ans;
     }
 
-    public Term parse(Rule r, Tokenizer source) {
+    private Term parse(Rule r, Tokenizer source) {
         HashSet<Terminal> possibleParses = new HashSet<Terminal>();
         for(Terminal t : g.terminals()) {
             if(parseTable.get(t).get(r.head()) != null) {
