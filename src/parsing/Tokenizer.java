@@ -24,7 +24,6 @@ SOFTWARE.
 package parsing;
 
 import grammar.Terminal;
-import grammar.Token;
 
 import java.util.HashSet;
 

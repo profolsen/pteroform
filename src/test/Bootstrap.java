@@ -26,6 +26,7 @@ package test;
 import grammar.*;
 import parsing.Parser;
 import parsing.Term;
+import parsing.Token;
 
 import java.io.File;
 import java.io.IOException;

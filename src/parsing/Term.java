@@ -26,7 +26,6 @@ package parsing;
 import grammar.Rule;
 import grammar.Symbol;
 import grammar.Terminal;
-import grammar.Token;
 
 import java.util.ArrayList;
 import java.util.HashMap;
