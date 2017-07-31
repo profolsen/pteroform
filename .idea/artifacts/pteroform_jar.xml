@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="pteroform:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/pteroform_jar</output-path>
+    <root id="archive" name="pteroform.jar">
+      <element id="module-output" name="pteroform" />
+      <element id="library" level="application" name="R Skeletons" />
+      <element id="library" level="project" name="R User Library" />
+    </root>
+  </artifact>
+</component>
