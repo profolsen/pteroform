@@ -23,8 +23,11 @@ SOFTWARE.
 
  */
 
-package grammar;
+package test.java.grammar;
 
+import main.java.grammar.Grammar;
+import main.java.grammar.Rule;
+import main.java.grammar.Terminal;
 import org.junit.Test;
 
 import java.util.HashMap;

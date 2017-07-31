@@ -22,9 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-package parsing;
+package test.java.parsing;
 
-import grammar.Terminal;
+import main.java.parsing.Token;
+import main.java.grammar.Terminal;
 import org.junit.Test;
 import static org.junit.Assert.*;
 /**
