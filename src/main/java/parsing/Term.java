@@ -80,12 +80,12 @@ public class Term implements TermNode{
         return tokens.get(index);
     }
 
-    @Override
+
     public String value() {
         return head;
     }
 
-    @Override
+
     public TermNode getChild(int index) {
         if(getType(index) instanceof Terminal) return getToken(index);
         return getTerm(index);
@@ -102,7 +102,7 @@ public class Term implements TermNode{
         return derivation.get(index);
     }
 
-    @Override
+
     public int numberOfChildren() {
         return 0;
     }

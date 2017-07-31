@@ -130,7 +130,7 @@ public class Rule implements Symbol, Iterable<ArrayList<Symbol>> {
         return head;
     }
 
-    @Override
+
     public Iterator<ArrayList<Symbol>> iterator() {
         return derivations.iterator();
     }

@@ -69,17 +69,17 @@ public class Token implements TermNode{
         return value;
     }
 
-    @Override
+
     public TermNode getChild(int index) {
         throw new IndexOutOfBoundsException("Index " + index + ", Size: 0");
     }
 
-    @Override
+
     public Symbol getType(int index) {
         throw new IndexOutOfBoundsException("Index " + index + ", Size: 0");
     }
 
-    @Override
+
     public int numberOfChildren() {
         return 0;
     }

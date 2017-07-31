@@ -91,14 +91,14 @@ public class Terminal implements Symbol {
         }
     }
 
-    @Override
+
     public HashSet<Terminal> first() {
         HashSet<Terminal> ans = new HashSet<Terminal>();
         ans.add(this);
         return ans;
     }
 
-    @Override
+
     public boolean phantom() {
         return phantom;
     }
