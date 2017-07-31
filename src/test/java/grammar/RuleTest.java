@@ -22,10 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-package test.java.grammar;
+package grammar;
 
-import main.java.grammar.Rule;
-import main.java.grammar.Terminal;
 import org.junit.Test;
 
 import java.util.HashSet;
