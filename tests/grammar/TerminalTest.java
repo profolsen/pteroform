@@ -35,6 +35,18 @@ import static org.junit.Assert.*;
  */
 public class TerminalTest {
 
+    public static Terminal testTerminal1() {
+        return new Terminal("abc+", "[abc]+", false, false);
+    }
+
+    public static Terminal testTerminal2() {
+        return new Terminal("abc+", "anythingbutabc+", true, false);
+    }
+
+    public static Terminal testTerminal3() {
+        return new Terminal("clearspace", "\\s+", false, true);
+    }
+
     @Test
     public void testFirst() {
         Terminal t = new Terminal("abc", "[abc]", false, false);
@@ -62,6 +74,36 @@ public class TerminalTest {
         t = Terminal.EOF;
         actual = t.parse("zzaabbcc",1, 0) == null ? null : t.parse("zzaabbcc",1, 0).value();
         assertEquals(correct, actual);
+    }
+
+    @Test
+    public void testEquals()
+    {
+        assertEquals(testTerminal1(), testTerminal2());
+        assertNotEquals(testTerminal1(), testTerminal3());
+    }
+
+    @Test
+    public void testPhantom() {
+        assertTrue(testTerminal2().phantom());
+        assertFalse(testTerminal1().phantom());
+    }
+
+    @Test
+    public void testIgnore() {
+        assertFalse(testTerminal2().ignore());
+        assertTrue(testTerminal3().ignore());
+    }
+
+    @Test
+    public void testName() {
+        assertEquals("abc+", testTerminal1().name());
+        assertEquals("abc+", testTerminal2().name());
+    }
+
+    @Test
+    public void testPattern() {
+        assertEquals("^[abc]+", testTerminal1().pattern());
     }
 
 }
