@@ -23,12 +23,13 @@ SOFTWARE.
  */
 package parsing;
 
+import grammar.Symbol;
 import grammar.Terminal;
 
 /**
  * Created by po917265 on 6/30/17.
  */
-public class Token {
+public class Token implements TermNode{
     private Terminal type;
     private String value;
 
@@ -62,5 +63,20 @@ public class Token {
      */
     public String value() {
         return value;
+    }
+
+    @Override
+    public TermNode getChild(int index) {
+        throw new IndexOutOfBoundsException("Index " + index + ", Size: 0");
+    }
+
+    @Override
+    public Symbol getType(int index) {
+        throw new IndexOutOfBoundsException("Index " + index + ", Size: 0");
+    }
+
+    @Override
+    public int numberOfChildren() {
+        return 0;
     }
 }

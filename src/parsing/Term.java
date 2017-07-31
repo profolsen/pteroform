@@ -33,7 +33,7 @@ import java.util.HashMap;
 /**
  * Created by po917265 on 6/30/17.
  */
-public class Term {
+public class Term implements TermNode{
     private HashMap<Integer, Term> subTerms;
     private HashMap<Integer, Token> tokens;
     private String head;
@@ -80,6 +80,17 @@ public class Term {
         return tokens.get(index);
     }
 
+    @Override
+    public String value() {
+        return head;
+    }
+
+    @Override
+    public TermNode getChild(int index) {
+        if(getType(index) instanceof Terminal) return getToken(index);
+        return getTerm(index);
+    }
+
     /**
      * Returns the type of the child at the specified index.
      * The type will either be a Rule (meaning that the child at that index will be a term).
@@ -91,12 +102,17 @@ public class Term {
         return derivation.get(index);
     }
 
+    @Override
+    public int numberOfChildren() {
+        return 0;
+    }
+
     /**
      * Returns the root non-terminal symbol of this term.
      * @return the root symbol.
      */
     public String head() {
-        return head;
+        return value();
     }
 
     /**
