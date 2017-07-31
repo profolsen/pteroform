@@ -32,6 +32,8 @@ import grammar.Terminal;
 public class Token implements TermNode{
     private Terminal type;
     private String value;
+    private int lineNumber;
+    private int characterPosition;
 
     /**
      * Creates a new Token.
@@ -39,9 +41,11 @@ public class Token implements TermNode{
      *             I.e., what terminal generated this token.
      * @param value the string value of this token.
      */
-    public Token(Terminal type, String value) {
+    public Token(Terminal type, String value, int lineNumber, int charactperPosition) {
         this.type = type;
         this.value = value;
+        this.lineNumber = lineNumber;
+        this.characterPosition = charactperPosition;
     }
 
     @Override
@@ -78,5 +82,21 @@ public class Token implements TermNode{
     @Override
     public int numberOfChildren() {
         return 0;
+    }
+
+    /**
+     * Returns the line number this token was read from.
+     * @return the line number this token was read from.
+     */
+    public int getLineNumber() {
+        return lineNumber;
+    }
+
+    /**
+     * Returns the position in the line at which this token begins.
+     * @return the position where this token begins.
+     */
+    public int getCharacterPosition() {
+        return characterPosition;
     }
 }

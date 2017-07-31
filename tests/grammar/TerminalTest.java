@@ -24,20 +24,20 @@ public class TerminalTest {
     public void testParse() {
         Terminal t = new Terminal("abc", "[abc]+", false, false);
         String correct = "aabbcc";
-        String actual = t.parse("aabbcczzdd").value();
+        String actual = t.parse("aabbcczzdd", 1, 0).value();
         assertEquals(correct, actual);
         correct = null;
-        actual = t.parse("zzaabbcc") == null ? null : t.parse("zzaabbcc").value();
+        actual = t.parse("zzaabbcc",1, 0) == null ? null : t.parse("zzaabbcc",1, 0).value();
         assertEquals(correct, actual);
         correct = "";
-        actual = Terminal.epsilon.parse("anything it doesn't matter").value();
+        actual = Terminal.epsilon.parse("anything it doesn't matter",1, 0).value();
         assertEquals(correct, actual);
         correct = "";
-        actual = Terminal.EOF.parse("").value();
+        actual = Terminal.EOF.parse("",1, 0).value();
         assertEquals(correct, actual);
         correct = null;
         t = Terminal.EOF;
-        actual = t.parse("zzaabbcc") == null ? null : t.parse("zzaabbcc").value();
+        actual = t.parse("zzaabbcc",1, 0) == null ? null : t.parse("zzaabbcc",1, 0).value();
         assertEquals(correct, actual);
     }
 

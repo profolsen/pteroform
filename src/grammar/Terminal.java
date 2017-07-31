@@ -116,15 +116,15 @@ public class Terminal implements Symbol {
      * @param input some string.
      * @return a token or null if no match is possible.
      */
-    public Token parse(String input) {
+    public Token parse(String input, int lineNumber, int characterPosition) {
         if(this.equals(Terminal.EOF)) {
-            return input.length() == 0 ? new Token(this, "") : null;
+            return input.length() == 0 ? new Token(this, "", lineNumber, characterPosition) : null;
         } else if(this.equals(Terminal.epsilon)) {
-            return new Token(this, "");
+            return new Token(this, "", lineNumber, characterPosition);
         }
         Matcher m = pattern.matcher(input);
         if(m.find()) {
-            Token ans = new Token(this, m.group(0));
+            Token ans = new Token(this, m.group(0), lineNumber, characterPosition);
             return ans;
         } else {
             return null;

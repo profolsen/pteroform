@@ -36,6 +36,8 @@ public class Tokenizer {
 
     private String source;
     private HashSet<Terminal> ignore;
+    private int lineNumber;
+    private int characterPosition;
 
     /**
      * Creates a new tokenizer which reads the source string.
@@ -47,6 +49,8 @@ public class Tokenizer {
     public Tokenizer(String source, HashSet<Terminal> ignore) {
         this.source = source;
         this.ignore = ignore;
+        lineNumber = 1;
+        characterPosition = 0;
         ignore();
     }
 
@@ -62,13 +66,14 @@ public class Tokenizer {
     public Token next(HashSet<Terminal> possibleParses, boolean use) {
         Token best = null;
         for(Terminal t : possibleParses) {
-            Token hypothetical = t.parse(source);
+            Token hypothetical = t.parse(source, lineNumber, characterPosition);
             if(hypothetical != null && (best == null || hypothetical.value().length() > best.value().length())) {
                 best = hypothetical;
             }
         }
         if(use && best != null) {
             source = source.substring(best.value().length()); //skip to the next begin spot.
+            updatePosition(best.value());
             ignore();
         }
         return best;
@@ -91,13 +96,24 @@ public class Tokenizer {
     private void ignore() {
         Token best = null;
         for(Terminal t : ignore) {
-            Token hypothetical = t.parse(source);
+            Token hypothetical = t.parse(source, lineNumber, characterPosition);
             if(hypothetical != null && (best == null || hypothetical.value().length() > best.value().length())) {
                 best = hypothetical;
             }
         }
         if(best != null) {
             source = source.substring(best.value().length()); //skip to the next begin spot.
+            updatePosition(best.value());
+        }
+    }
+
+    private void updatePosition(String s) {
+        for(char c : s.toCharArray()) {
+            characterPosition++;
+            if(c == '\n') {
+                lineNumber++;
+                characterPosition = 0;
+            }
         }
     }
 
