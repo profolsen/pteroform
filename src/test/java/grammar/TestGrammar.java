@@ -23,7 +23,7 @@ SOFTWARE.
 
  */
 
-package test.java.grammar;
+package java.grammar;
 
 import main.java.grammar.Grammar;
 import main.java.grammar.Rule;
