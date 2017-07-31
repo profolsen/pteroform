@@ -27,6 +27,7 @@ package grammar;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -107,6 +108,29 @@ public class TestGrammar {
 
     @Test
     public void testParseTable() {
-        System.out.println(testGrammar1().parseTable());
+        HashMap<Terminal, HashMap<String, ArrayList<Symbol>>> expected = new HashMap<Terminal, HashMap<String, ArrayList<Symbol>>>();
+        Rule s = new Rule("S", false);
+        Rule x = new Rule("X", false);
+        Rule t = new Rule("T", false);
+        Terminal xt = Terminal.keyword("x", "", false);
+        Terminal at = Terminal.keyword("a", "", false);
+        Terminal clearspace = Terminal.keyword("clearspace", "", false);
+        expected.put(Terminal.epsilon, new HashMap<String, ArrayList<Symbol>>());
+        expected.put(at, new HashMap<String, ArrayList<Symbol>>());
+        expected.put(clearspace, new HashMap<String, ArrayList<Symbol>>());
+        expected.put(xt, new HashMap<String, ArrayList<Symbol>>());
+        expected.put(Terminal.EOF, new HashMap<String, ArrayList<Symbol>>());
+        expected.get(at).put("S", asList(x, t));
+        expected.get(at).put("X", asList(at));
+        expected.get(xt).put("T", asList(xt, x, t));
+        expected.get(Terminal.EOF).put("T", asList(Terminal.epsilon));
+
+        assertEquals(expected, testGrammar1().parseTable());
+    }
+
+    public static ArrayList<Symbol> asList(Symbol... symbols) {
+        ArrayList<Symbol> ans = new ArrayList<Symbol>();
+        for(Symbol s : symbols) ans.add(s);
+        return ans;
     }
 }
