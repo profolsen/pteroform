@@ -27,6 +27,7 @@ package grammar;
 
 import org.junit.Test;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
 import static org.junit.Assert.*;
@@ -90,7 +91,18 @@ public class TestGrammar {
 
     @Test
     public void testFollow() {
-        System.out.println(testGrammar1().follow());
+        //System.out.println(testGrammar1().follow());
+
+        HashSet<Terminal> h1 = new HashSet<Terminal>();
+        h1.add(Terminal.EOF);
+        HashSet<Terminal> h2 = new HashSet<Terminal>();
+        h2.add(Terminal.EOF);
+        h2.add(new Terminal("x", "", false, false));
+        HashMap<Rule, HashSet<Terminal>> expected = new HashMap<Rule, HashSet<Terminal>>();
+        expected.put(new Rule("S", false), h1);
+        expected.put(new Rule("T", false), h1);
+        expected.put(new Rule("X", false), h2);
+        assertEquals(expected, testGrammar1().follow());
     }
 
     @Test
