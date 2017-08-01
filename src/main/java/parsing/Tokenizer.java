@@ -38,6 +38,7 @@ public class Tokenizer {
     private HashSet<Terminal> ignore;
     private int lineNumber;
     private int characterPosition;
+    private Token lastParsed;
 
     /**
      * Creates a new tokenizer which reads the source string.
@@ -52,6 +53,7 @@ public class Tokenizer {
         lineNumber = 1;
         characterPosition = 0;
         ignore();
+        lastParsed = new Token(new Terminal("", "", false, false), "", lineNumber, characterPosition);
     }
 
     /**
@@ -74,6 +76,7 @@ public class Tokenizer {
         if(use && best != null) {
             source = source.substring(best.value().length()); //skip to the next begin spot.
             updatePosition(best.value());
+            lastParsed = best;
             ignore();
         }
         return best;
@@ -123,5 +126,14 @@ public class Tokenizer {
      */
     public String source() {
         return source;
+    }
+
+    /**
+     * Returns the last token to be parsed.
+     * If no token has been parsed yet, returns a dummy token.
+     * @return the most recently parsed token.
+     */
+    public Token last() {
+        return lastParsed;
     }
 }

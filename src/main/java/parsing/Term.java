@@ -104,7 +104,7 @@ public class Term implements TermNode{
 
 
     public int numberOfChildren() {
-        return 0;
+        return size();
     }
 
     /**

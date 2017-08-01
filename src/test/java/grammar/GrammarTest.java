@@ -33,9 +33,9 @@ import java.util.HashSet;
 
 import static org.junit.Assert.*;
 
-public class TestGrammar {
+public class GrammarTest {
 
-    public Grammar testGrammar1() {
+    public static Grammar testGrammar1() {
         Grammar g = new Grammar();
         Rule r1 = new Rule("S", false);
         Rule r2 = new Rule("T", false);

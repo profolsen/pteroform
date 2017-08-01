@@ -106,7 +106,7 @@ public class Parser {
         }
         Token next = source.next(possibleParses, false);  //just look ahead.
         if(next == null) {
-            throw new SyntaxError("Expected " + possibleParses + " For " + source.source());
+            throw syntaxError(source.last(), possibleParses);
         } else {
             ArrayList<Symbol> expansion = parseTable.get(next.type()).get(r.head());
             Term.TermFactory tf = new Term.TermFactory(r.head(), expansion);
@@ -115,7 +115,7 @@ public class Parser {
                 if(s instanceof Terminal) {
                     Token t = source.next((Terminal)s, true);
                     if(t == null) {
-                        throw new SyntaxError("Expected " + s + " For " + source.source());
+                        throw syntaxError(source.last(), s);
                     }
                     tf.setNext(t);  //use it...
                 } else {
@@ -124,5 +124,9 @@ public class Parser {
             }
             return tf.generate();
         }
+    }
+
+    private static SyntaxError syntaxError(Token at, Object expected) {
+        throw new SyntaxError("Expected " + expected + " after " + at + ", line " + at.getLineNumber() + ":" + at.getCharacterPosition());
     }
 }

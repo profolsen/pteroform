@@ -1,4 +1,4 @@
-Pteroform -- An LL(1) Parsing library
+Pteroform -- A Parsing Library
 ==========
 
 [![Build Status](https://travis-ci.org/profolsen/pteroform.svg?branch=master)](https://travis-ci.org/profolsen/pteroform)
